@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import software.amazon.awssdk.services.iot.model.IndexNotReadyException;
+import software.amazon.awssdk.services.iot.model.IotException;
 import software.amazon.awssdk.services.iot.model.LimitExceededException;
 import software.amazon.cloudformation.proxy.HandlerErrorCode;
 import software.amazon.cloudformation.proxy.Logger;
@@ -27,6 +28,14 @@ public class TranslatorTest {
         HandlerErrorCode result =
                 Translator.translateExceptionToErrorCode(LimitExceededException.builder().build(), logger);
         assertThat(result).isEqualByComparingTo(HandlerErrorCode.ServiceLimitExceeded);
+    }
+
+    @Test
+    public void translateIotExceptionTo_AccessDeniedErrorCode() {
+
+        HandlerErrorCode result =
+                Translator.translateExceptionToErrorCode(IotException.builder().statusCode(403).build(), logger);
+        assertThat(result).isEqualByComparingTo(HandlerErrorCode.AccessDenied);
     }
 
     @Test
