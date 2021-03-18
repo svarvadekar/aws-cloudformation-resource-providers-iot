@@ -31,10 +31,14 @@ public class TranslatorTest {
     }
 
     @Test
-    public void translateIotExceptionTo_AccessDeniedErrorCode() {
+    public void translateIotExceptionToCfn_AccessDeniedErrorCode() {
 
         HandlerErrorCode result =
-                Translator.translateExceptionToErrorCode(IotException.builder().statusCode(403).build(), logger);
+                Translator.translateExceptionToErrorCode(IotException.builder().statusCode(403)
+                        .message("User not authorised to perform on resource with an explicit deny " +
+                                "(Service: Iot, Status Code: 403, Request ID: dummy, " +
+                                "Extended Request ID: null), stack trace")
+                        .build(), logger);
         assertThat(result).isEqualByComparingTo(HandlerErrorCode.AccessDenied);
     }
 

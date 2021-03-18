@@ -74,7 +74,7 @@ public class Translator {
             return HandlerErrorCode.Throttling;
         } else if (e instanceof ResourceNotFoundException) {
             return HandlerErrorCode.NotFound;
-        } else if (e instanceof IotException && ((IotException) e).statusCode() == 403){
+        } else if (e instanceof IotException && ((IotException) e).statusCode() == 403) {
             return HandlerErrorCode.AccessDenied;
         } else {
             logger.log(String.format("Unexpected exception \"%s\", stack trace: %s",
